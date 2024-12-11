@@ -1,9 +1,9 @@
-package controller.news;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("")
-public class CommentController {
-}
+//package controller.news;
+//
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//@RestController
+//@RequestMapping("/")
+//public class CommentController {
+//}
