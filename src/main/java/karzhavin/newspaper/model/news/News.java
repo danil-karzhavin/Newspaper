@@ -1,35 +1,48 @@
-package model.news;
+package karzhavin.newspaper.model.news;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import model.user.User;
+import karzhavin.newspaper.model.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
+@Table(name = "news")
 public class News {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     String title;
+
+    @Column(name = "text_data", nullable = false, length = 10000)
     String textData;
 
     @Lob
+    @Column(name = "image")
     byte[] image;
 
+    @Column(name = "date_creation", nullable = false)
     LocalDate dateCreation;
+
+    @Column(name = "date_change")
     LocalDate dateChange;
+
+    @Column(name = "count_likes", nullable = false)
     Integer countLikes;
 
+    @Column(name = "author_id", nullable = false)
     Integer authorId;
+
     @ManyToOne
-    @JoinColumn(name = "authorId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "author_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     User author;
 
-    @OneToMany(mappedBy = "newsItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     List<Comment> comments;
 

@@ -1,4 +1,4 @@
-package model.user;
+package karzhavin.newspaper.model.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -8,20 +8,30 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
+    @Column(name = "info", length = 5000)
     String info;
+
+    @Column(name = "date_creation", nullable = false)
     LocalDate dateCreation;
 
     @Lob
+    @Column(name = "user_image")
     byte[] userImage;
 
+    @Column(name = "user_id", nullable = false)
     Integer userId;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     User user;
+
+    public  UserProfile(){}
 
     public UserProfile(Integer id, String info, LocalDate dateCreation, byte[] userImage, Integer userId, User user) {
         this.id = id;

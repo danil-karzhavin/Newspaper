@@ -1,8 +1,8 @@
-package model.user;
+package karzhavin.newspaper.model.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import model.news.Comment;
-import model.news.News;
+import karzhavin.newspaper.model.news.Comment;
+import karzhavin.newspaper.model.news.News;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,14 +10,21 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
+    @Column(nullable = false, unique = true)
     String username;
+
+    @Column(nullable = false)
     String password;
+
+    @Column(nullable = false, unique = true)
     String email;
 
-    @OneToOne(mappedBy = "user") // переменная дочернего объекта указывающая на этот объект
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     UserProfile userProfile;
 
@@ -28,6 +35,8 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     List<Comment> comments;
+
+    public User(){}
 
     public User(Integer id, String username, String password, String email, UserProfile userProfile, List<News> news, List<Comment> comments) {
         this.id = id;

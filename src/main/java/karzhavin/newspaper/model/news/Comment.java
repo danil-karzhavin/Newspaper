@@ -1,27 +1,37 @@
-package model.news;
+package karzhavin.newspaper.model.news;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import model.user.User;
+import karzhavin.newspaper.model.user.User;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
     String text;
 
+    @Column(name = "user_id", nullable = false)
     Integer userId;
+
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     User author;
 
+    @Column(name = "news_item_id", nullable = false)
     Integer newsItemId;
+
     @ManyToOne
-    @JoinColumn(name = "newsItemId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "news_item_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     News news;
+
+    public Comment(){}
 
     public Comment(Integer id, String text, Integer userId, User author, Integer newsItemId, News news) {
         this.id = id;
