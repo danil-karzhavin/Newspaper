@@ -2,6 +2,7 @@ package karzhavin.newspaper.model.news;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import karzhavin.newspaper.model.comment.Comment;
 import karzhavin.newspaper.model.user.User;
 
 import javax.persistence.*;
@@ -31,10 +32,10 @@ public class News {
     @Column(name = "date_change")
     LocalDate dateChange;
 
-    @Column(name = "count_likes", nullable = false)
+    @Column(name = "count_likes", nullable = true)
     Integer countLikes;
 
-    @Column(name = "author_id", nullable = false)
+    @Column(name = "author_id")
     Integer authorId;
 
     @ManyToOne

@@ -5,13 +5,13 @@ spring:
     password: develop
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 server:
-  address: 172.31.7.102
+  address: 172.26.121.136
   port: 8080
 
 management:

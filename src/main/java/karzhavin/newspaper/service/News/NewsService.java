@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import karzhavin.newspaper.repository.news.INewsRepository;
 import org.springframework.beans.BeanUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,8 @@ public class NewsService implements INewsService {
     public News createNews(NewsDto newsDto) {
         News news = new News();
         BeanUtils.copyProperties(newsDto, news);
+        news.setCountLikes(0);
+        news.setDateCreation(LocalDate.now());
         newsRepository.save(news);
         return news;
     }

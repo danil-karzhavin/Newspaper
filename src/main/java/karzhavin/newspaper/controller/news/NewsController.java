@@ -49,8 +49,7 @@ public class NewsController {
     }
 
     @DeleteMapping("/{authorId}")
-    ResponseEntity<Object> deleteAllNewsByAuthorId(@PathVariable("authorId") Integer authorId){
+    void deleteAllNewsByAuthorId(@PathVariable("authorId") Integer authorId){
         newsService.deleteAllNewsByAuthorId(authorId);
-        return ResponseEntity.noContent().build();
     }
 }

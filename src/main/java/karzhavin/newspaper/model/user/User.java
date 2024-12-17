@@ -1,7 +1,7 @@
 package karzhavin.newspaper.model.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import karzhavin.newspaper.model.news.Comment;
+import karzhavin.newspaper.model.comment.Comment;
 import karzhavin.newspaper.model.news.News;
 
 import javax.persistence.*;
