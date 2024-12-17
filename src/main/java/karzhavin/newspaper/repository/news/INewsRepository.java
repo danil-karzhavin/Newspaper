@@ -1,6 +1,6 @@
-package repository.news;
+package karzhavin.newspaper.repository.news;
 
-import model.news.News;
+import karzhavin.newspaper.model.news.News;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

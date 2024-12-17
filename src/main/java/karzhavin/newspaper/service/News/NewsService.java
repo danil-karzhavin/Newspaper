@@ -1,10 +1,10 @@
-package service.News;
+package karzhavin.newspaper.service.News;
 
-import Exception.News.NewsNotFoundException;
-import model.news.News;
-import model.news.NewsDto;
+import karzhavin.newspaper.Exception.News.NewsNotFoundException;
+import karzhavin.newspaper.model.news.News;
+import karzhavin.newspaper.model.news.NewsDto;
 import org.springframework.stereotype.Service;
-import repository.news.INewsRepository;
+import karzhavin.newspaper.repository.news.INewsRepository;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class NewsService implements INewsService {
     }
 
     @Override
-    public List<News> getAllNewsByAuthorId(Integer authorId) {
+    public List<News> getNewsByAuthorId(Integer authorId) {
         return List.of();
     }
 
@@ -64,6 +64,5 @@ public class NewsService implements INewsService {
 
     @Override
     public void deleteAllNewsByAuthorId(Integer authorId) {
-
     }
 }

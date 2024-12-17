@@ -1,4 +1,4 @@
-package model.news;
+package karzhavin.newspaper.model.news;
 
 public class NewsDto {
     Integer id;
