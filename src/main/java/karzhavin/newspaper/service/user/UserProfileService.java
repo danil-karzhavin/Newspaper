@@ -1,6 +1,7 @@
 package karzhavin.newspaper.service.user;
 
 import karzhavin.newspaper.Exception.user.UserProfileNotFoundException;
+import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserProfile;
 import karzhavin.newspaper.model.user.UserProfileDto;
 import karzhavin.newspaper.repository.user.IUserProfileRepository;
@@ -12,9 +13,11 @@ import java.util.Optional;
 @Service
 public class UserProfileService implements IUserProfileService{
     IUserProfileRepository userProfileRepository;
+    IUserService userService;
 
-    public UserProfileService(IUserProfileRepository userProfileRepository) {
+    public UserProfileService(IUserProfileRepository userProfileRepository, IUserService userService) {
         this.userProfileRepository = userProfileRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -40,13 +43,18 @@ public class UserProfileService implements IUserProfileService{
     public UserProfile createUserProfile(UserProfileDto userProfileDto) {
         UserProfile userProfile = new UserProfile();
         BeanUtils.copyProperties(userProfileDto, userProfile);
+
+        User user = userService.getUserById(userProfileDto.getUserId());
+        // userProfile.setUserId(userId);
+        userProfile.setUser(user);
+
         userProfileRepository.save(userProfile);
         return userProfile;
     }
 
     @Override
-    public UserProfile updateUserProfileById(Integer userProfileId, UserProfileDto userProfileDto) {
-        UserProfile userProfile = getUserProfileById(userProfileId);
+    public UserProfile updateUserProfileById(UserProfileDto userProfileDto) {
+        UserProfile userProfile = getUserProfileById(userProfileDto.getId());
         BeanUtils.copyProperties(userProfileDto, userProfile);
         userProfileRepository.save(userProfile);
         return userProfile;

@@ -7,6 +7,6 @@ public interface IUserService {
     User createUser(UserDto userDto);
     User getUserById(Integer userId);
     User getUserByUserProfileId(Integer userProfileId);
-    User updateUser(Integer userId, UserDto userDto);
+    User updateUser(UserDto userDto);
     void deleteUserById(Integer userId);
 }

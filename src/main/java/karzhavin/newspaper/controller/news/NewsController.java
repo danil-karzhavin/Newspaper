@@ -27,7 +27,7 @@ public class NewsController {
         return ResponseEntity.ok(newsService.getNewsById(newsId));
     }
 
-    @GetMapping("/{authorId}")
+    @GetMapping("byAuthor/{authorId}")
     ResponseEntity<List<News>> getAllNewsByAuthorId(@PathVariable("authorId") Integer authorId){
         return ResponseEntity.ok(newsService.getNewsByAuthorId(authorId));
     }

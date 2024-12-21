@@ -16,30 +16,30 @@ public class Comment {
 
     String text;
 
-    @Column(name = "user_id", nullable = false)
-    Integer userId;
+    @Column(name = "author_id", nullable = false)
+    Integer authorId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "author_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     User author;
 
-    @Column(name = "news_item_id", nullable = false)
-    Integer newsItemId;
+    @Column(name = "news_id", nullable = false)
+    Integer newsId;
 
     @ManyToOne
-    @JoinColumn(name = "news_item_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "news_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     News news;
 
     public Comment(){}
 
-    public Comment(Integer id, String text, Integer userId, User author, Integer newsItemId, News news) {
+    public Comment(Integer id, String text, Integer authorId, User author, Integer newsId, News news) {
         this.id = id;
         this.text = text;
-        this.userId = userId;
+        this.authorId = authorId;
         this.author = author;
-        this.newsItemId = newsItemId;
+        this.newsId = newsId;
         this.news = news;
     }
 
@@ -51,16 +51,16 @@ public class Comment {
         return text;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
     public User getAuthor() {
         return author;
     }
 
-    public Integer getNewsItemId() {
-        return newsItemId;
+    public Integer getNewsId() {
+        return newsId;
     }
 
     public News getNews() {
@@ -75,16 +75,16 @@ public class Comment {
         this.text = text;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public void setAuthor(User author) {
         this.author = author;
     }
 
-    public void setNewsItemId(Integer newsItemId) {
-        this.newsItemId = newsItemId;
+    public void setNewsId(Integer newsId) {
+        this.newsId = newsId;
     }
 
     public void setNews(News news) {

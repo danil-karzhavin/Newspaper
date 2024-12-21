@@ -5,9 +5,11 @@ import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserDto;
 import karzhavin.newspaper.repository.user.IUserRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService implements IUserService {
     IUserRepository userRepository;
 
@@ -42,8 +44,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User updateUser(Integer userId, UserDto userDto) {
-        User user = userRepository.getById(userId);
+    public User updateUser(UserDto userDto) {
+        User user = getUserById(userDto.getId());
         BeanUtils.copyProperties(userDto, user);
         userRepository.save(user);
         return user;

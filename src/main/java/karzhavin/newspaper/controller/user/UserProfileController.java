@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/usersProfiles")
+@RequestMapping("/usersProfile")
 public class UserProfileController {
     IUserProfileService userProfileService;
 
@@ -15,12 +15,12 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/byUser/")
+    @GetMapping("/byUser/{userId}")
     ResponseEntity<UserProfile> getUserProfileByUserId(@PathVariable("userId") Integer userId){
         return ResponseEntity.ok(userProfileService.getUserProfileByUserId(userId));
     }
 
-    @GetMapping("/")
+    @GetMapping("/{id}")
     ResponseEntity<UserProfile> getUserProfileById(@PathVariable("id") Integer id){
         return ResponseEntity.ok(userProfileService.getUserProfileById(id));
     }
@@ -30,13 +30,13 @@ public class UserProfileController {
         return ResponseEntity.ok(userProfileService.createUserProfile(userProfileDto));
     }
 
-    @PostMapping("/")
-    ResponseEntity<UserProfile> updateUserProfileById(Integer userProfileId, @RequestBody UserProfileDto userProfileDto){
-        return ResponseEntity.ok(userProfileService.updateUserProfileById(userProfileId, userProfileDto));
+    @PutMapping("/")
+    ResponseEntity<UserProfile> updateUserProfileById(@RequestBody UserProfileDto userProfileDto){
+        return ResponseEntity.ok(userProfileService.updateUserProfileById(userProfileDto));
     }
 
-    @DeleteMapping("/")
-    void deleteUserProfileById(@PathVariable Integer id){
+    @DeleteMapping("/{id}")
+    void deleteUserProfileById(@PathVariable("id") Integer id){
         userProfileService.deleteUserProfileById(id);
     }
 }

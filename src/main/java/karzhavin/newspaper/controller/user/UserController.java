@@ -22,9 +22,9 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(userDto));
     }
 
-    @PostMapping("/")
-    ResponseEntity<User> updateUserById(Integer userId, @RequestBody UserDto userDto){
-        return ResponseEntity.ok(userService.updateUser(userId, userDto));
+    @PutMapping("/")
+    ResponseEntity<User> updateUserById(@RequestBody UserDto userDto){
+        return ResponseEntity.ok(userService.updateUser(userDto));
     }
 
     @GetMapping("/")
@@ -32,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @GetMapping("/")
+    @GetMapping("/{userProfileId}")
     ResponseEntity<User> getUserByUserProfileId(@PathVariable("userProfileId") Integer userProfileId){
         return ResponseEntity.ok(userService.getUserByUserProfileId(userProfileId));
     }

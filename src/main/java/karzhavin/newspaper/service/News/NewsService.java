@@ -3,6 +3,8 @@ package karzhavin.newspaper.service.News;
 import karzhavin.newspaper.Exception.News.NewsNotFoundException;
 import karzhavin.newspaper.model.news.News;
 import karzhavin.newspaper.model.news.NewsDto;
+import karzhavin.newspaper.model.user.User;
+import karzhavin.newspaper.service.user.IUserService;
 import org.springframework.stereotype.Service;
 import karzhavin.newspaper.repository.news.INewsRepository;
 import org.springframework.beans.BeanUtils;
@@ -14,9 +16,11 @@ import java.util.Optional;
 @Service
 public class NewsService implements INewsService {
     INewsRepository newsRepository;
+    IUserService userService;
 
-    public NewsService(INewsRepository newsRepository) {
+    public NewsService(INewsRepository newsRepository, IUserService userService) {
         this.newsRepository = newsRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -42,6 +46,10 @@ public class NewsService implements INewsService {
     @Override
     public News createNews(NewsDto newsDto) {
         News news = new News();
+
+        User author = userService.getUserById(newsDto.getAuthorId());
+        news.setAuthor(author);
+
         BeanUtils.copyProperties(newsDto, news);
         news.setCountLikes(0);
         news.setDateCreation(LocalDate.now());
