@@ -3,10 +3,18 @@ package karzhavin.newspaper.service.user;
 import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserDto;
 
+import java.util.List;
+import java.util.Map;
+
 public interface IUserService {
-    User createUser(UserDto userDto);
+    UserDto createUser(UserDto userDto);
+
     User getUserById(Integer userId);
+    UserDto getUserDtoById(Integer Id);
+    List<UserDto> getAllUsersDto();
+    UserDto getUserDtoByEmail(Map<String, Object> data);
+
     User getUserByUserProfileId(Integer userProfileId);
-    User updateUser(UserDto userDto);
+    UserDto updateUser(UserDto userDto);
     void deleteUserById(Integer userId);
 }

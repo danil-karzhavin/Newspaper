@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/usersProfile")
+@RequestMapping("/userProfile")
 public class UserProfileController {
     IUserProfileService userProfileService;
 
@@ -16,8 +16,8 @@ public class UserProfileController {
     }
 
     @GetMapping("/byUser/{userId}")
-    ResponseEntity<UserProfile> getUserProfileByUserId(@PathVariable("userId") Integer userId){
-        return ResponseEntity.ok(userProfileService.getUserProfileByUserId(userId));
+    ResponseEntity<UserProfileDto> getUserProfileByUserId(@PathVariable("userId") Integer userId){
+        return ResponseEntity.ok(userProfileService.getUserProfileDtoByUserId(userId));
     }
 
     @GetMapping("/{id}")
@@ -26,12 +26,12 @@ public class UserProfileController {
     }
 
     @PostMapping("/")
-    ResponseEntity<UserProfile> createUserProfile(@RequestBody UserProfileDto userProfileDto){
+    ResponseEntity<UserProfileDto> createUserProfile(@RequestBody UserProfileDto userProfileDto){
         return ResponseEntity.ok(userProfileService.createUserProfile(userProfileDto));
     }
 
     @PutMapping("/")
-    ResponseEntity<UserProfile> updateUserProfileById(@RequestBody UserProfileDto userProfileDto){
+    ResponseEntity<UserProfileDto> updateUserProfileById(@RequestBody UserProfileDto userProfileDto){
         return ResponseEntity.ok(userProfileService.updateUserProfileById(userProfileDto));
     }
 

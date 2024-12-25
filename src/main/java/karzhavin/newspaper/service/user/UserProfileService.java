@@ -1,6 +1,7 @@
 package karzhavin.newspaper.service.user;
 
-import karzhavin.newspaper.Exception.user.UserProfileNotFoundException;
+import karzhavin.newspaper.Exception.user.UserProfile.UserProfileDtoException;
+import karzhavin.newspaper.Exception.user.UserProfile.UserProfileNotFoundException;
 import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserProfile;
 import karzhavin.newspaper.model.user.UserProfileDto;
@@ -21,13 +22,13 @@ public class UserProfileService implements IUserProfileService{
     }
 
     @Override
-    public UserProfile getUserProfileByUserId(Integer userId) {
+    public UserProfileDto getUserProfileDtoByUserId(Integer userId) {
         Optional<UserProfile> userProfile = userProfileRepository.findByUserId(userId);
 
         if (userProfile.isEmpty()){
             throw new UserProfileNotFoundException("Not found user profile with such user id");
         }
-        return userProfile.get();
+        return getUserProfileDtoById(userProfile.get().getId());
     }
 
     @Override
@@ -40,7 +41,18 @@ public class UserProfileService implements IUserProfileService{
     }
 
     @Override
-    public UserProfile createUserProfile(UserProfileDto userProfileDto) {
+    public UserProfileDto getUserProfileDtoById(Integer id) {
+        UserProfileDto userProfileDto = new UserProfileDto();
+        UserProfile userProfile = getUserProfileById(id);
+        BeanUtils.copyProperties(userProfile, userProfileDto);
+        return userProfileDto;
+    }
+
+    @Override
+    public UserProfileDto createUserProfile(UserProfileDto userProfileDto) {
+        if(userProfileDto.getUserId() == null){
+            throw new UserProfileDtoException("Field 'userId' is null");
+        }
         UserProfile userProfile = new UserProfile();
         BeanUtils.copyProperties(userProfileDto, userProfile);
 
@@ -49,15 +61,15 @@ public class UserProfileService implements IUserProfileService{
         userProfile.setUser(user);
 
         userProfileRepository.save(userProfile);
-        return userProfile;
+        return getUserProfileDtoById(userProfile.getId());
     }
 
     @Override
-    public UserProfile updateUserProfileById(UserProfileDto userProfileDto) {
+    public UserProfileDto updateUserProfileById(UserProfileDto userProfileDto) {
         UserProfile userProfile = getUserProfileById(userProfileDto.getId());
-        BeanUtils.copyProperties(userProfileDto, userProfile);
+        BeanUtils.copyProperties(userProfileDto, userProfile, new String[] {"id", "userId"});
         userProfileRepository.save(userProfile);
-        return userProfile;
+        return getUserProfileDtoById(userProfile.getId());
     }
 
     @Override

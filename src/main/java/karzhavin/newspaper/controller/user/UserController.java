@@ -3,10 +3,12 @@ package karzhavin.newspaper.controller.user;
 import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserDto;
 import karzhavin.newspaper.service.user.IUserService;
-import karzhavin.newspaper.service.user.UserService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -18,23 +20,33 @@ public class UserController {
     }
 
     @PostMapping("/")
-    ResponseEntity<User> createUser(@RequestBody UserDto userDto){
+    ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         return ResponseEntity.ok(userService.createUser(userDto));
     }
 
     @PutMapping("/")
-    ResponseEntity<User> updateUserById(@RequestBody UserDto userDto){
+    ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
         return ResponseEntity.ok(userService.updateUser(userDto));
     }
 
-    @GetMapping("/")
-    ResponseEntity<User> getUserById(@PathVariable("id") Integer id){
-        return ResponseEntity.ok(userService.getUserById(id));
+    @GetMapping("/{id}")
+    ResponseEntity<UserDto> getUserDtoById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(userService.getUserDtoById(id));
     }
 
-    @GetMapping("/{userProfileId}")
+    @PostMapping("/byEmail/")
+    ResponseEntity<UserDto> getUserDtoByEmail(@RequestBody Map<String, Object> data){
+        return ResponseEntity.ok(userService.getUserDtoByEmail(data));
+    }
+
+    @GetMapping("/byUserProfile/{userProfileId}")
     ResponseEntity<User> getUserByUserProfileId(@PathVariable("userProfileId") Integer userProfileId){
         return ResponseEntity.ok(userService.getUserByUserProfileId(userProfileId));
+    }
+
+    @GetMapping("/")
+    ResponseEntity<List<UserDto>> getAllUsersDto(){
+        return ResponseEntity.ok(userService.getAllUsersDto());
     }
 
     @DeleteMapping("/")
