@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import karzhavin.newspaper.service.News.INewsService;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/news")
@@ -17,9 +19,9 @@ public class NewsController {
         this.newsService = newsService;
     }
 
-    @GetMapping("/")
-    ResponseEntity<List<News>> GetAllNews() {
-        return ResponseEntity.ok(newsService.getAllNews());
+    @PostMapping("/getNews")
+    ResponseEntity<List<News>> GetAllNews(@RequestBody Map<String, LocalDate> dates) {
+        return ResponseEntity.ok(newsService.getAllNews(dates));
     }
 
     @GetMapping("/{newsId}")

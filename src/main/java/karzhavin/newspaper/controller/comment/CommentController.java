@@ -18,17 +18,17 @@ public class CommentController {
     }
 
     @GetMapping("/{commentId}")
-    ResponseEntity<Comment> getCommentById(@PathVariable("commentId") Integer commentId){
-        return ResponseEntity.ok(commentService.getCommentById(commentId));
+    ResponseEntity<CommentDto> getCommentDtoById(@PathVariable("commentId") Integer commentId){
+        return ResponseEntity.ok(commentService.getCommentDtoById(commentId));
     }
 
     @GetMapping("/byNews/{newsId}")
-    ResponseEntity<List<Comment>> getAllCommentsBy(@PathVariable("newsId") Integer newsId){
+    ResponseEntity<List<Comment>> getAllCommentsByNewsId(@PathVariable("newsId") Integer newsId){
         return ResponseEntity.ok(commentService.getAllCommentsByNewsId(newsId));
     }
 
     @PostMapping("/")
-    ResponseEntity<Comment> createComment(@RequestBody CommentDto commentDto){
+    ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto){
         return ResponseEntity.ok(commentService.createComment(commentDto));
     }
 

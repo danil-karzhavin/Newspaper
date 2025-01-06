@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -33,6 +32,10 @@ public class UserController {
     ResponseEntity<UserDto> getUserDtoById(@PathVariable("id") Integer id){
         return ResponseEntity.ok(userService.getUserDtoById(id));
     }
+    @GetMapping("/dev/{id}")
+    ResponseEntity<User> getUserById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(userService.getUserById(id));
+    }
 
     @PostMapping("/byEmail/")
     ResponseEntity<UserDto> getUserDtoByEmail(@RequestBody Map<String, Object> data){
@@ -40,8 +43,8 @@ public class UserController {
     }
 
     @GetMapping("/byUserProfile/{userProfileId}")
-    ResponseEntity<User> getUserByUserProfileId(@PathVariable("userProfileId") Integer userProfileId){
-        return ResponseEntity.ok(userService.getUserByUserProfileId(userProfileId));
+    ResponseEntity<UserDto> getUserByUserProfileId(@PathVariable("userProfileId") Integer userProfileId){
+        return ResponseEntity.ok(userService.getUserByUserDtoProfileId(userProfileId));
     }
 
     @GetMapping("/")

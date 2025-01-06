@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface ICommentService {
     Comment getCommentById(Integer id);
+    CommentDto getCommentDtoById(Integer id);
     List<Comment> getAllCommentsByNewsId(Integer newsId);
-    Comment createComment(CommentDto commentDto);
+    CommentDto createComment(CommentDto commentDto);
     Comment updateCommentById(CommentDto commentDto);
     void deleteCommentById(Integer id);
 }

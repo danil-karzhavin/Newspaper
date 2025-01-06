@@ -9,6 +9,7 @@ import karzhavin.newspaper.repository.user.IUserProfileRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,7 +55,7 @@ public class UserProfileService implements IUserProfileService{
             throw new UserProfileDtoException("Field 'userId' is null");
         }
         UserProfile userProfile = new UserProfile();
-        BeanUtils.copyProperties(userProfileDto, userProfile);
+        BeanUtils.copyProperties(userProfileDto, userProfile, new String[] {"id"});
 
         User user = userService.getUserById(userProfileDto.getUserId());
         // userProfile.setUserId(userId);

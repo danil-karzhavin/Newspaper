@@ -11,7 +11,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 server:
-  address: 172.26.121.136
+  address: localhost
   port: 8080
 
 management:

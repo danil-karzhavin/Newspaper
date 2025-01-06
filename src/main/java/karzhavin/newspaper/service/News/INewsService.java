@@ -3,11 +3,13 @@ package karzhavin.newspaper.service.News;
 import karzhavin.newspaper.model.news.News;
 import karzhavin.newspaper.model.news.NewsDto;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface INewsService {
     News getNewsById(Integer newsId);
-    List<News> getAllNews();
+    List<News> getAllNews(Map<String, LocalDate> dates);
     List<News> getNewsByAuthorId(Integer authorId);
 
     News createNews(NewsDto newsDto);

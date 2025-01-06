@@ -14,7 +14,7 @@ public interface IUserService {
     List<UserDto> getAllUsersDto();
     UserDto getUserDtoByEmail(Map<String, Object> data);
 
-    User getUserByUserProfileId(Integer userProfileId);
+    UserDto getUserByUserDtoProfileId(Integer userProfileId);
     UserDto updateUser(UserDto userDto);
     void deleteUserById(Integer userId);
 }

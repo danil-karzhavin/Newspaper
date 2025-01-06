@@ -1,5 +1,6 @@
 package karzhavin.newspaper.service.comment;
 
+import karzhavin.newspaper.Exception.comment.CommentDtoException;
 import karzhavin.newspaper.Exception.comment.CommentNotFoundException;
 import karzhavin.newspaper.model.comment.Comment;
 import karzhavin.newspaper.model.comment.CommentDto;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentService implements ICommentService{
+public class CommentService implements ICommentService {
     ICommentRepository commentRepository;
     IUserService userService;
     INewsService newsService;
@@ -29,10 +30,17 @@ public class CommentService implements ICommentService{
     @Override
     public Comment getCommentById(Integer id) {
         Optional<Comment> comment = commentRepository.findById(id);
-        if (comment.isEmpty()){
+        if (comment.isEmpty()) {
             throw new CommentNotFoundException("Not found comment with such id");
         }
         return comment.get();
+    }
+
+    @Override
+    public CommentDto getCommentDtoById(Integer id) {
+        CommentDto commentDto = new CommentDto();
+        BeanUtils.copyProperties(getCommentById(id), commentDto);
+        return commentDto;
     }
 
     @Override
@@ -41,26 +49,32 @@ public class CommentService implements ICommentService{
     }
 
     @Override
-    public Comment createComment(CommentDto commentDto) {
+    public CommentDto createComment(CommentDto commentDto) {
+        if (commentDto.getAuthorId() == null || commentDto.getNewsId() == null) {
+            throw new CommentDtoException("Field 'authorId' or (and) 'newsId' is null");
+        }
+
         Comment comment = new Comment();
-        BeanUtils.copyProperties(commentDto, comment);
+        BeanUtils.copyProperties(commentDto, comment, new String[]{"id"});
 
         User author = userService.getUserById(commentDto.getAuthorId());
         News news = newsService.getNewsById(commentDto.getNewsId());
 
-        // comment.setAuthorId(authorId);
         comment.setAuthor(author);
-        // comment.setNewsId(newsId);
         comment.setNews(news);
 
         commentRepository.save(comment);
-        return comment;
+        BeanUtils.copyProperties(comment, commentDto);
+        return commentDto;
     }
 
     @Override
     public Comment updateCommentById(CommentDto commentDto) {
+        if (commentDto.getId() == null) {
+            throw new CommentDtoException("Field 'id' is null");
+        }
         Comment comment = getCommentById(commentDto.getId());
-        BeanUtils.copyProperties(commentDto, comment);
+        BeanUtils.copyProperties(commentDto, comment, new String[]{"id", "newsId", "authorId"});
         commentRepository.save(comment);
         return comment;
     }

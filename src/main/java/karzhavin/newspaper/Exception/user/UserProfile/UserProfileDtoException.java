@@ -4,4 +4,7 @@ public class UserProfileDtoException extends RuntimeException {
     public UserProfileDtoException(String message){
         super(message);
     }
+    public UserProfileDtoException(){
+        super("");
+    }
 }

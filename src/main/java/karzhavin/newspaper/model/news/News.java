@@ -33,7 +33,7 @@ public class News {
     LocalDate dateChange;
 
     @Column(name = "count_likes", nullable = true)
-    Integer countLikes;
+    Integer countLikes = 0;
 
     @Column(name = "author_id")
     Integer authorId;
