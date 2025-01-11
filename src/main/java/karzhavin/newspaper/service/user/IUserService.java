@@ -9,10 +9,12 @@ import java.util.Map;
 public interface IUserService {
     UserDto createUser(UserDto userDto);
 
+    User identicateAndAuthenticate(String email, String password);
     User getUserById(Integer userId);
     UserDto getUserDtoById(Integer Id);
     List<UserDto> getAllUsersDto();
     UserDto getUserDtoByEmail(Map<String, Object> data);
+    User getUserByEmail(String email);
 
     UserDto getUserByUserDtoProfileId(Integer userProfileId);
     UserDto updateUser(UserDto userDto);

@@ -1,9 +1,7 @@
 package karzhavin.newspaper.service.user;
 
-import karzhavin.newspaper.Exception.News.NewsDtoException;
 import karzhavin.newspaper.Exception.user.UserDtoException;
 import karzhavin.newspaper.Exception.user.UserNotFoundException;
-import karzhavin.newspaper.Exception.user.UserProfile.UserProfileDtoException;
 import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserDto;
 import karzhavin.newspaper.repository.user.IUserRepository;
@@ -20,6 +18,15 @@ public class UserService implements IUserService {
 
     public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public User identicateAndAuthenticate(String email, String password) {
+        User user = getUserByEmail(email);
+        if (user.getPassword().equals(password)){
+            return user;
+        }
+        throw new UserNotFoundException("User not found with such id"); // создать новое исключение
     }
 
     @Override
@@ -67,7 +74,16 @@ public class UserService implements IUserService {
     @Override
     public UserDto getUserDtoByEmail(Map<String, Object> data) {
         String email = data.get("email").toString();
-        return userRepository.findByEmail(email);
+        return userRepository.findUserDtoByEmail(email);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty()){
+            throw new UserNotFoundException("User not found with such email");
+        }
+        return user.get();
     }
 
     @Override
