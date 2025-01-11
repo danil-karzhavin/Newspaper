@@ -1,9 +1,13 @@
 package karzhavin.newspaper.controller.user;
 
+import karzhavin.newspaper.model.authenticate.AuthenticationRequest;
+import karzhavin.newspaper.model.authenticate.AuthenticationResponse;
 import karzhavin.newspaper.model.user.User;
 import karzhavin.newspaper.model.user.UserDto;
+import karzhavin.newspaper.security.JwtUtil;
 import karzhavin.newspaper.service.user.IUserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +17,11 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     IUserService userService;
+    JwtUtil jwtUtil;
 
-    public UserController(IUserService userService) {
+    public UserController(IUserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/")
@@ -55,5 +61,13 @@ public class UserController {
     @DeleteMapping("/")
     void deleteUserById(@PathVariable("id") Integer id){
         userService.deleteUserById(id);
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        final User user = userService.identicateAndAuthenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+        final String jwt = jwtUtil.generateToken(user);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }
