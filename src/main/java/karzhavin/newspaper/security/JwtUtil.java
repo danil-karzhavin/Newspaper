@@ -17,7 +17,6 @@ public class JwtUtil {
         return Jwts.builder().setSubject(user.getEmail()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)).signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
-    // метод извлекает имя пользователя из токена JWT
     public String extractEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }

@@ -26,7 +26,7 @@ public class UserService implements IUserService {
         if (user.getPassword().equals(password)){
             return user;
         }
-        throw new UserNotFoundException("User not found with such id"); // создать новое исключение
+        throw new UserNotFoundException("User not found with such id");
     }
 
     @Override
@@ -54,7 +54,6 @@ public class UserService implements IUserService {
         return userDto;
     }
 
-    // я не знаю зачем мне этот метод
     @Override
     public List<UserDto> getAllUsersDto() {
         return userRepository.findAllUserDto();

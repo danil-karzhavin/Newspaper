@@ -6,7 +6,4 @@ public class UserDtoException extends RuntimeException{
     public UserDtoException(String message){
         super(message);
     }
-    UserDtoException(){
-        super("");
-    }
 }
