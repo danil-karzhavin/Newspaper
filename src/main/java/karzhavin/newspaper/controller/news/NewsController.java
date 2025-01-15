@@ -5,6 +5,7 @@ import karzhavin.newspaper.model.news.NewsDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import karzhavin.newspaper.service.News.INewsService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +36,7 @@ public class NewsController {
     }
 
     @PostMapping("/")
-    ResponseEntity<News> createNews(@RequestBody NewsDto newsDto){
+    ResponseEntity<News> createNews(@RequestBody NewsDto newsDto, @RequestParam("file") MultipartFile file){
         return ResponseEntity.ok(newsService.createNews(newsDto));
     }
 

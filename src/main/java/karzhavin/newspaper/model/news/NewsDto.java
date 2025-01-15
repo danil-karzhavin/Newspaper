@@ -7,14 +7,14 @@ public class NewsDto {
     String title;
     String textData;
     LocalDate dateCreation;
-    byte[] image;
+    String imageBase64;
     Integer authorId;
 
-    public NewsDto(Integer id, String title, String textData, LocalDate dateCreation, byte[] image, Integer authorId) {
+    public NewsDto(Integer id, String title, String textData, LocalDate dateCreation, String imageBase64, Integer authorId) {
         this.id = id;
         this.title = title;
         this.textData = textData;
-        this.image = image;
+        this.imageBase64 = imageBase64;
         this.authorId = authorId;
         this.dateCreation = dateCreation;
     }
@@ -31,8 +31,8 @@ public class NewsDto {
         return textData;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImageBase64() {
+        return imageBase64;
     }
 
     public Integer getAuthorId() {
@@ -59,8 +59,8 @@ public class NewsDto {
         this.dateCreation = dateCreation;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
     }
 
     public void setAuthorId(Integer authorId) {

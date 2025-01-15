@@ -12,6 +12,7 @@ import karzhavin.newspaper.repository.news.INewsRepository;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class NewsService implements INewsService {
     public List<News> getAllNews(Map<String, LocalDate> dates) {
         LocalDate startDate = dates.get("startDate");
         LocalDate endDate = dates.get("endDate");
-        if (startDate == null || endDate == null){
+        if (startDate == null || endDate == null) {
             throw new NewsException("Field 'startDate' or 'endDate' is null in Map<String, LocalDate> dates");
         }
         return newsRepository.findAllBetweenDates(startDate, endDate);
@@ -61,7 +62,12 @@ public class NewsService implements INewsService {
         User author = userService.getUserById(newsDto.getAuthorId());
         news.setAuthor(author);
 
-        BeanUtils.copyProperties(newsDto, news, new String[] {"id"});
+        BeanUtils.copyProperties(newsDto, news, new String[]{"id"});
+
+        if (newsDto.getImageBase64() != null && !newsDto.getImageBase64().isEmpty()) {
+            byte[] imageBytes = Base64.getDecoder().decode(newsDto.getImageBase64());
+            news.setImage(imageBytes);
+        }
         newsRepository.save(news);
         return news;
     }
@@ -72,14 +78,19 @@ public class NewsService implements INewsService {
             throw new NewsDtoException("Field 'id' is null");
         }
         News news = getNewsById(newsDto.getId());
-        BeanUtils.copyProperties(newsDto, news, new String[] {"id"});
+        BeanUtils.copyProperties(newsDto, news, new String[]{"id"});
+
+        if (newsDto.getImageBase64() != null && !newsDto.getImageBase64().isEmpty()) {
+            byte[] imageBytes = Base64.getDecoder().decode(newsDto.getImageBase64());
+            news.setImage(imageBytes);
+        }
         newsRepository.save(news);
         return news;
     }
 
     @Override
     public void deleteNewsById(Integer newsId) {
-        if(!newsRepository.existsById(newsId)) {
+        if (!newsRepository.existsById(newsId)) {
             throw new NewsNotFoundException("Not found New with such id");
         }
         newsRepository.deleteById(newsId);
